@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class JHLockView;
+
+@protocol JHLockViewDelegate <NSObject>
+
+- (void) lockViewDidClick:(JHLockView *)lockView andPwd:(NSString *)pwd;
+
+@end
+
 @interface JHLockView : UIView
+
+@property (weak , nonatomic) IBOutlet id<JHLockViewDelegate> delegate;
 
 @end

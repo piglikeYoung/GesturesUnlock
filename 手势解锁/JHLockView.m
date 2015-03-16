@@ -11,6 +11,10 @@
 @interface JHLockView()
 
 @property (strong , nonatomic) NSMutableArray *buttons;
+/**
+ *  定义属性,记录用户当前手指的位置(非按钮范围内)
+ */
+@property (assign , nonatomic) CGPoint currentPoint;
 
 @end
 
@@ -52,7 +56,7 @@
 {
     for (int i = 0; i < 9; i++) {
         // 1.创建按钮
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeSystem];
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         // 2.设置按钮的背景图片
         [btn setBackgroundImage:[UIImage imageNamed:@"gesture_node_normal"] forState:UIControlStateNormal];
         
@@ -61,10 +65,13 @@
         // 3.添加按钮到view
         [self addSubview:btn];
         
-        btn.backgroundColor = [UIColor redColor];
+        //btn.backgroundColor = [UIColor redColor];
         
         // 4.禁止按钮的点击事件（因为我们需要监听触摸事件）
         btn.userInteractionEnabled = NO;
+        
+        // 5.设置按钮的tag作为唯一标识
+        btn.tag = i;
     }
 }
 
@@ -94,9 +101,6 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     // 1.获取按下的点
-    //   UITouch *touch =  [touches anyObject];
-    //   CGPoint startPoint = [touch locationInView:touch.view];
-    
     CGPoint startPoint = [self getCurrentTouchPoint:touches];
     
     // 2.判断触摸的位置是否在按钮的范围内
@@ -127,8 +131,36 @@
         [self.buttons addObject:btn];
     }
     
+    // 记录当前手指移动位置
+    self.currentPoint = movePoint;
+    
     // 通知view绘制线段
     [self setNeedsDisplay];
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    // 取出用户输入的密码
+    NSMutableString *result = [NSMutableString string];
+    for (UIButton *btn in self.buttons) {
+        [result appendFormat:@"%d",btn.tag];
+    }
+    
+    // 通知代理,告诉代理用户输入的密码
+    if ([self.delegate respondsToSelector:@selector(lockViewDidClick:andPwd:)]) {
+        [self.delegate lockViewDidClick:self andPwd:result];
+    }
+    
+    // 当手指离开屏幕所有的按钮都不选中
+    // 本方法是数组里的每一个元素都调用同一个方法
+    [self.buttons makeObjectsPerformSelector:@selector(setSelected:) withObject:@(NO)];
+    
+    // 清空数组
+    [self.buttons removeAllObjects];
+    [self setNeedsDisplay];
+    
+    // 清空currentPoint
+    self.currentPoint = CGPointZero;
 }
 
 /**
@@ -162,6 +194,10 @@
 -(void) drawRect:(CGRect)rect
 {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
+    
+    // 清空上下文
+    CGContextClearRect(ctx, rect);
+    
     // 从数组中取出所有的按钮，连接所有按钮的中点
     for (int i = 0; i < self.buttons.count; i++) {
         // 取出按钮
@@ -173,8 +209,17 @@
         }
     }
     
-    [[UIColor greenColor] set];
+    // 判断数组中是否有按钮, 如果有按钮就有起点, 有起点就不会报错,针对穿出的线段,没点击按钮之前不应该有穿出的线段
+    if (self.buttons.count != 0) {
+        CGContextAddLineToPoint(ctx, self.currentPoint.x, self.currentPoint.y);
+    }
+    
+//    [[UIColor greenColor] set];
+    
+    [[UIColor colorWithRed:18/255.0 green:102/255.0 blue:72/255.0 alpha:1] set];
     CGContextSetLineWidth(ctx, 10);
+    CGContextSetLineJoin(ctx, kCGLineJoinRound);
+    CGContextSetLineCap(ctx, kCGLineCapRound);
     CGContextStrokePath(ctx);
 }
 
