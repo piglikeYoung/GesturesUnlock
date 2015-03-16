@@ -14,6 +14,7 @@
 		7D68A7181AB66C4E005EEB7D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D68A7171AB66C4E005EEB7D /* Images.xcassets */; };
 		7D68A71B1AB66C4E005EEB7D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D68A7191AB66C4E005EEB7D /* LaunchScreen.xib */; };
 		7D68A7271AB66C4E005EEB7D /* ____Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D68A7261AB66C4E005EEB7D /* ____Tests.m */; };
+		7D68A7321AB66D4D005EEB7D /* JHLockView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D68A7311AB66D4D005EEB7D /* JHLockView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		7D68A7201AB66C4E005EEB7D /* 手势解锁Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "手势解锁Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D68A7251AB66C4E005EEB7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D68A7261AB66C4E005EEB7D /* ____Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "____Tests.m"; sourceTree = "<group>"; };
+		7D68A7301AB66D4D005EEB7D /* JHLockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHLockView.h; sourceTree = "<group>"; };
+		7D68A7311AB66D4D005EEB7D /* JHLockView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHLockView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +89,8 @@
 				7D68A7111AB66C4E005EEB7D /* ViewController.h */,
 				7D68A7121AB66C4E005EEB7D /* ViewController.m */,
 				7D68A7141AB66C4E005EEB7D /* Main.storyboard */,
+				7D68A7301AB66D4D005EEB7D /* JHLockView.h */,
+				7D68A7311AB66D4D005EEB7D /* JHLockView.m */,
 				7D68A7171AB66C4E005EEB7D /* Images.xcassets */,
 				7D68A7191AB66C4E005EEB7D /* LaunchScreen.xib */,
 				7D68A70A1AB66C4E005EEB7D /* Supporting Files */,
@@ -220,6 +225,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D68A7131AB66C4E005EEB7D /* ViewController.m in Sources */,
+				7D68A7321AB66D4D005EEB7D /* JHLockView.m in Sources */,
 				7D68A7101AB66C4E005EEB7D /* AppDelegate.m in Sources */,
 				7D68A70D1AB66C4E005EEB7D /* main.m in Sources */,
 			);
